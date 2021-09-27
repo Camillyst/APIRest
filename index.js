@@ -3,6 +3,8 @@ const app = express();
 const connection = require("./database/database");
 const Aniversariantesbd = require("./database/aniversariantesbd");
 const bodyParser = require("body-parser");
+const swaggerUi = require('swagger-ui-express')
+const swaggerFile = require('./swagger_output.json')
 
 app.use('/css', express.static('css'));
 
@@ -11,6 +13,8 @@ app.use(bodyParser.json());
 
 app.set("view engine", "ejs");
 app.use(express.static("/"));
+app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
+
 
 connection.authenticate().then(() => {
     console.log("database connect!");
